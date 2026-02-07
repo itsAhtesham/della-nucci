@@ -1,26 +1,361 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ═══════════════════════════════════════════
+   CAFE DELLA NUCCI — Design System
+   Italian Romantic Luxury · Editorial Elegance
+   ═══════════════════════════════════════════ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ── Brand Colors ── */
+  --color-burgundy-50: #fdf4f4;
+  --color-burgundy-100: #fbe8e8;
+  --color-burgundy-200: #f7d5d6;
+  --color-burgundy-300: #f0b4b6;
+  --color-burgundy-400: #e6888b;
+  --color-burgundy-500: #d86165;
+  --color-burgundy-600: #c24044;
+  --color-burgundy-700: #a33135;
+  --color-burgundy-800: #7A2828;
+  --color-burgundy-900: #5B1A1A;
+  --color-burgundy-950: #3d1012;
+
+  /* ── Warm Neutrals ── */
+  --color-cream-50: #fdfcfb;
+  --color-cream-100: #faf8f5;
+  --color-cream-200: #F5EFE6;
+  --color-cream-300: #ede6da;
+  --color-cream-400: #e0d4c0;
+  --color-cream-500: #cebfa5;
+
+  /* ── Peach Accents ── */
+  --color-peach-50: #fdf7f5;
+  --color-peach-100: #fbeee9;
+  --color-peach-200: #F8DDD3;
+  --color-peach-300: #f3c5b3;
+
+  /* ── Sage Green ── */
+  --color-sage-100: #e8ede6;
+  --color-sage-200: #c5d4bf;
+  --color-sage-300: #a4b89c;
+  --color-sage-400: #8A9A7E;
+  --color-sage-500: #6b7d60;
+
+  /* ── Gold Accent ── */
+  --color-gold-200: #e8d5a3;
+  --color-gold-300: #d4b978;
+  --color-gold-400: #c9a84c;
+  --color-gold-500: #b8942f;
+
+  /* ── Warm Grays ── */
+  --color-warm-50: #fafaf9;
+  --color-warm-100: #f5f5f4;
+  --color-warm-200: #e7e5e4;
+  --color-warm-300: #d6d3d1;
+  --color-warm-400: #a8a29e;
+  --color-warm-500: #78716c;
+  --color-warm-600: #57534e;
+  --color-warm-700: #44403c;
+  --color-warm-800: #292524;
+  --color-warm-900: #1c1917;
+
+  /* ── Font Families ── */
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-accent: var(--font-cormorant), Georgia, serif;
+
+  /* ── Font Sizes ── */
+  --text-display-lg: 4.5rem;
+  --text-display-md: 3.5rem;
+  --text-display-sm: 3rem;
+  --text-heading-xl: 2.5rem;
+  --text-heading-lg: 2rem;
+  --text-heading-md: 1.5rem;
+  --text-heading-sm: 1.25rem;
+  --text-body-lg: 1.125rem;
+  --text-body-md: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-caption: 0.75rem;
+
+  /* ── Spacing ── */
+  --spacing-section: 7rem;
+  --spacing-section-sm: 5rem;
+
+  /* ── Shadows ── */
+  --shadow-soft: 0 2px 15px -3px rgba(91, 26, 26, 0.07), 0 10px 20px -2px rgba(91, 26, 26, 0.04);
+  --shadow-elevated: 0 10px 40px -10px rgba(91, 26, 26, 0.15);
+  --shadow-dramatic: 0 25px 60px -12px rgba(91, 26, 26, 0.25);
+  --shadow-glow: 0 0 40px rgba(91, 26, 26, 0.15);
+
+  /* ── Animations ── */
+  --ease-elegant: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Base Styles ── */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream-100);
+    color: var(--color-warm-700);
+    line-height: 1.7;
+    overflow-x: hidden;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Typography ── */
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    color: var(--color-burgundy-900);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    line-height: 1.75;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Scrollbar ── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream-200);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-burgundy-900);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-burgundy-800);
+}
+
+/* ── Selection ── */
+
+::selection {
+  background-color: var(--color-burgundy-900);
+  color: var(--color-peach-100);
+}
+
+/* ── Focus Styles ── */
+
+:focus-visible {
+  outline: 2px solid var(--color-burgundy-900);
+  outline-offset: 3px;
+}
+
+/* ── Smooth Image Loading ── */
+
+img {
+  transition: opacity 0.4s var(--ease-elegant);
+}
+
+img[loading="lazy"] {
+  opacity: 0;
+}
+
+img[loading="lazy"].loaded,
+img:not([loading="lazy"]) {
+  opacity: 1;
+}
+
+/* ── Utility Classes ── */
+
+@utility text-gradient {
+  background: linear-gradient(135deg, var(--color-burgundy-900), var(--color-burgundy-600));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+@utility glass-dark {
+  background: rgba(91, 26, 26, 0.3);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@utility section-padding {
+  padding-top: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
+}
+
+@utility elegant-border {
+  border: 1px solid rgba(91, 26, 26, 0.08);
+}
+
+@utility line-ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@utility marquee-track {
+  display: flex;
+  animation: marquee 40s linear infinite;
+}
+
+/* ── Elegant Link Underline ── */
+
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.4s var(--ease-cinematic);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Card Hover Polish ── */
+
+.card-elegant {
+  transition: transform 0.5s var(--ease-cinematic),
+              box-shadow 0.5s var(--ease-cinematic);
+}
+
+.card-elegant:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* ── Custom Animations ── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(1deg); }
+  66% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+@keyframes scroll-indicator {
+  0% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.3; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes draw-line {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+@keyframes fade-up-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes rotate-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ── Decorative Ornament Lines ── */
+
+.ornament-line {
+  position: relative;
+}
+
+.ornament-line::before,
+.ornament-line::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  width: 3rem;
+  background: linear-gradient(
+    to var(--direction, right),
+    var(--color-burgundy-900),
+    transparent
+  );
+}
+
+.ornament-line::before {
+  right: calc(100% + 1rem);
+  --direction: right;
+}
+
+.ornament-line::after {
+  left: calc(100% + 1rem);
+  --direction: left;
+}
+
+/* ── Film Grain Overlay ── */
+
+.film-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
 }
