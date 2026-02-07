@@ -15,7 +15,10 @@ export function AboutStory() {
                   className="w-full h-full"
                   style={{
                     background:
-                      "linear-gradient(145deg, #F8DDD3 0%, #F5EFE6 40%, #ede6da 100%)",
+                      "url('/images/about/story-bg.avif')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                   }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">

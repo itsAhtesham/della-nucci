@@ -39,7 +39,7 @@ const amenities = [
   {
     icon: "Music" as const,
     title: "Karaoke Nights",
-    description: "Sing, laugh, and create memories with friends",
+    description: "Sing, laugh, and create memories",
     color: "from-burgundy-100/60 to-peach-100/50",
     iconColor: "text-burgundy-700",
   },

@@ -12,6 +12,7 @@ const galleryItems = [
     gradient: "linear-gradient(145deg, #F8DDD3 0%, #f3c5b3 40%, #ede6da 100%)",
     span: "sm:col-span-2 sm:row-span-2",
     height: "h-64 sm:h-full",
+    image: "/images/gallery/ambiance/og-default.avif",
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ const galleryItems = [
     gradient: "linear-gradient(145deg, #ede6da 0%, #F5EFE6 40%, #f3c5b3 100%)",
     span: "sm:col-span-1 sm:row-span-1",
     height: "h-48 sm:h-full",
+    image: "/images/gallery/food/wood-fired-pizza.webp",
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ const galleryItems = [
     gradient: "linear-gradient(145deg, #e0d4c0 0%, #F5EFE6 50%, #ede6da 100%)",
     span: "sm:col-span-1 sm:row-span-1",
     height: "h-48 sm:h-full",
+    image: "/images/gallery/food/signature-coffee.webp",
   },
   {
     id: 4,
@@ -37,6 +40,7 @@ const galleryItems = [
     span: "sm:col-span-2 sm:row-span-1",
     height: "h-48 sm:h-full",
     dark: true,
+    image: "/images/gallery/ambiance/romantic.webp",
   },
   {
     id: 5,
@@ -45,6 +49,7 @@ const galleryItems = [
     gradient: "linear-gradient(145deg, #fbeee9 0%, #F8DDD3 40%, #f3c5b3 100%)",
     span: "sm:col-span-2 sm:row-span-1",
     height: "h-48 sm:h-full",
+    image: "/images/gallery/ambiance/sweet-endings.webp",
   },
   {
     id: 6,
@@ -53,6 +58,7 @@ const galleryItems = [
     gradient: "linear-gradient(145deg, #e8ede6 0%, #c5d4bf 40%, #e8ede6 100%)",
     span: "sm:col-span-2 sm:row-span-1",
     height: "h-48 sm:h-full",
+    image: "/images/gallery/ambiance/lush-greenery.avif",
   },
 ];
 
@@ -103,31 +109,46 @@ export function HomeGallery() {
                 className={`relative w-full ${item.height} rounded-sm overflow-hidden group cursor-pointer`}
                 style={{ background: item.gradient }}
               >
-                {/* Subtle pattern overlay */}
-                <div
-                  className="absolute inset-0 opacity-[0.02]"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23${item.dark ? 'fff' : '5B1A1A'}' fill-opacity='1'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
-                  }}
-                />
+                {/* Image layer — visible when present */}
+                {item.image && (
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `url(${item.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                    }}
+                  />
+                )}
+                {/* Gradient overlay for text contrast when image is present */}
+                {item.image && (
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 45%, transparent 70%)",
+                    }}
+                  />
+                )}
 
                 {/* Hover overlay */}
-                <div className={`absolute inset-0 ${item.dark ? 'bg-black/0 group-hover:bg-black/20' : 'bg-burgundy-900/0 group-hover:bg-burgundy-900/20'} transition-all duration-600`} />
+                <div className={`absolute inset-0 ${item.dark || item.image ? 'bg-black/0 group-hover:bg-black/20' : 'bg-burgundy-900/0 group-hover:bg-burgundy-900/20'} transition-all duration-600`} />
 
                 {/* Content — bottom aligned */}
                 <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
                   <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                    <p className={`font-serif text-base sm:text-lg font-bold ${item.dark ? 'text-white' : 'text-burgundy-950'} leading-tight mb-1`}>
+                    <p className={`font-serif text-base sm:text-lg font-bold ${item.dark || item.image ? 'text-white' : 'text-burgundy-950'} leading-tight mb-1`}>
                       {item.label}
                     </p>
-                    <p className={`text-xs font-accent tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${item.dark ? 'text-white/60' : 'text-burgundy-900/50'}`}>
+                    <p className={`text-xs font-accent tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${item.dark || item.image ? 'text-white/60' : 'text-burgundy-900/50'}`}>
                       {item.subtitle}
                     </p>
                   </div>
                 </div>
 
                 {/* Corner accent on hover */}
-                <div className={`absolute top-4 right-4 w-8 h-8 border-t border-r ${item.dark ? 'border-white/0 group-hover:border-white/30' : 'border-burgundy-900/0 group-hover:border-burgundy-900/20'} transition-all duration-500`} />
+                <div className={`absolute top-4 right-4 w-8 h-8 border-t border-r ${item.dark || item.image ? 'border-white/0 group-hover:border-white/30' : 'border-burgundy-900/0 group-hover:border-burgundy-900/20'} transition-all duration-500`} />
               </div>
             </FadeIn>
           ))}
