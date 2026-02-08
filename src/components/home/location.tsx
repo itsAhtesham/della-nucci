@@ -9,7 +9,7 @@ const infoItems = [
     icon: MapPin,
     title: "Address",
     content: SITE_CONFIG.address.full,
-    link: SITE_CONFIG.social.google,
+    link: SITE_CONFIG.social.directions,
     linkText: "Get Directions",
     linkIcon: Navigation,
     accent: "bg-burgundy-900",
@@ -73,7 +73,7 @@ export function HomeLocation() {
 
           <FadeIn delay={0.2}>
             <a
-              href={SITE_CONFIG.social.google}
+              href={SITE_CONFIG.social.directions}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2.5 text-burgundy-900 font-medium text-sm uppercase tracking-[0.15em] hover:gap-3 transition-all duration-400 shrink-0"
@@ -87,7 +87,7 @@ export function HomeLocation() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
           {/* Map */}
           <FadeIn className="lg:col-span-3">
-            <div className="relative w-full h-72 sm:h-80 lg:h-[480px] rounded-sm overflow-hidden shadow-elevated">
+            <div className="relative w-full h-72 sm:h-80 lg:h-full lg:min-h-[400px] rounded-sm overflow-hidden shadow-elevated">
               <iframe
                 src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505.073!2d77.3650662!3d28.5395734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce707ee160619%3A0xee511eb7aef6cb13!2sDella%20Nucci!5e0!3m2!1sen!2sin!4v1706000000000!5m2!1sen!2sin`}
                 width="100%"

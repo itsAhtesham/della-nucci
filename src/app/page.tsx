@@ -8,9 +8,28 @@ import { HomeCTA } from "@/components/home/cta";
 import { HomeLocation } from "@/components/home/location";
 import { Marquee } from "@/components/shared/marquee";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || undefined;
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteUrl,
+    },
+  ],
+};
+
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <HomeHero />
       <Marquee variant="dark" />
       <HomeAbout />

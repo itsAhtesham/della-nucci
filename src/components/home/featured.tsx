@@ -17,6 +17,15 @@ const categoryIcons: Record<string, string> = {
   beverages: "Drinks",
 };
 
+const categoryEmojis: Record<string, string> = {
+  pizza: "🍕",
+  pasta: "🍝",
+  coffee: "☕",
+  desserts: "🍰",
+  burgers: "🍔",
+  beverages: "🥤",
+};
+
 export function HomeFeatured() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 });
 
@@ -67,73 +76,92 @@ export function HomeFeatured() {
         </div>
 
         {/* Menu Items Grid */}
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-burgundy-900/[0.06] rounded-sm overflow-hidden">
+        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {featuredItems.slice(0, 6).map((item, i) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="group bg-cream-50 hover:bg-white transition-colors duration-500"
+              className={`group relative ${i === 0 ? "sm:col-span-2 lg:col-span-1" : ""}`}
             >
-              <div className="p-7 sm:p-8 lg:p-9 h-full flex flex-col">
-                {/* Top row — category + dietary */}
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-burgundy-800/60 font-accent font-medium">
-                    {categoryIcons[item.category] || item.category}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {item.tags.includes("best-seller") && (
-                      <span className="px-2.5 py-1 bg-burgundy-900/8 text-burgundy-900 text-[9px] font-medium uppercase tracking-wider rounded-full">
-                        Bestseller
-                      </span>
-                    )}
-                    {item.tags.includes("chef-special") && (
-                      <span className="px-2.5 py-1 bg-sage-100 text-sage-500 text-[9px] font-medium uppercase tracking-wider rounded-full">
-                        Chef&apos;s Pick
-                      </span>
-                    )}
-                    {item.tags.includes("new") && (
-                      <span className="px-2.5 py-1 bg-peach-100 text-burgundy-800 text-[9px] font-medium uppercase tracking-wider rounded-full">
-                        New
-                      </span>
-                    )}
+              <div className="relative bg-white border border-burgundy-900/[0.06] rounded-sm overflow-hidden h-full flex flex-col transition-all duration-500 hover:translate-y-[-4px] hover:shadow-[0_10px_40px_-10px_rgba(91,26,26,0.15)] border-l-2 border-l-transparent hover:border-l-burgundy-900">
+                {/* Decorative category emoji watermark */}
+                <div className="absolute top-4 right-4 text-6xl opacity-[0.06] pointer-events-none select-none leading-none">
+                  {categoryEmojis[item.category] || "✨"}
+                </div>
+
+                {/* Corner accent on hover */}
+                <div className="absolute top-3 right-3 w-7 h-7 border-t border-r border-burgundy-900/0 group-hover:border-burgundy-900/20 transition-all duration-500" />
+
+                <div className="p-7 sm:p-8 lg:p-9 h-full flex flex-col relative">
+                  {/* Top row — category + dietary */}
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-burgundy-800/60 font-accent font-medium">
+                      {categoryIcons[item.category] || item.category}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {item.tags.includes("best-seller") && (
+                        <span className="px-2.5 py-1 bg-burgundy-900/8 text-burgundy-900 text-[9px] font-medium uppercase tracking-wider rounded-full">
+                          Bestseller
+                        </span>
+                      )}
+                      {item.tags.includes("chef-special") && (
+                        <span className="px-2.5 py-1 bg-sage-100 text-sage-500 text-[9px] font-medium uppercase tracking-wider rounded-full">
+                          Chef&apos;s Pick
+                        </span>
+                      )}
+                      {item.tags.includes("new") && (
+                        <span className="px-2.5 py-1 bg-peach-100 text-burgundy-800 text-[9px] font-medium uppercase tracking-wider rounded-full">
+                          New
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                {/* Name + description */}
-                <div className="flex-1">
-                  <h3 className="font-serif text-xl sm:text-[1.35rem] font-bold text-burgundy-900 mb-2.5 group-hover:text-burgundy-700 transition-colors duration-300 leading-tight">
-                    {item.name}
-                  </h3>
-                  <p className="text-warm-500 text-sm leading-relaxed line-clamp-2">
-                    {item.description}
-                  </p>
-                </div>
+                  {/* Name + description */}
+                  <div className="flex-1">
+                    <h3 className="font-serif text-xl sm:text-[1.35rem] font-bold text-burgundy-900 mb-2.5 group-hover:text-burgundy-700 transition-colors duration-300 leading-tight">
+                      {item.name}
+                    </h3>
+                    <p className="text-warm-500 text-sm leading-relaxed line-clamp-2">
+                      {item.description}
+                    </p>
+                  </div>
 
-                {/* Bottom row — price + veg indicator */}
-                <div className="flex items-center justify-between mt-6 pt-5 border-t border-burgundy-900/[0.05]">
-                  <span className="font-serif text-xl font-bold text-burgundy-900">
-                    {formatCurrency(item.price)}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {item.tags.includes("spicy") && (
-                      <span className="text-[10px] text-warm-400 font-accent tracking-wider">Spicy</span>
-                    )}
-                    <div
-                      className={`w-4 h-4 rounded-sm border-2 flex items-center justify-center ${
-                        item.tags.includes("vegetarian") || item.tags.includes("vegan")
-                          ? "border-green-600"
-                          : "border-red-600"
-                      }`}
-                    >
-                      <div
-                        className={`w-2 h-2 rounded-full ${
+                  {/* Bottom row — price + veg indicator */}
+                  <div className="flex items-center justify-between mt-6 pt-5 border-t border-burgundy-900/[0.05]">
+                    <span className="font-serif text-xl font-bold text-burgundy-900 bg-burgundy-900/[0.04] px-3 py-1 rounded-full">
+                      {formatCurrency(item.price)}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {item.tags.includes("spicy") && (
+                        <span className="text-[10px] text-warm-400 font-accent tracking-wider">Spicy</span>
+                      )}
+                      <div className="flex items-center gap-1.5">
+                        <div
+                          className={`w-3.5 h-3.5 rounded-sm border-2 flex items-center justify-center ${
+                            item.tags.includes("vegetarian") || item.tags.includes("vegan")
+                              ? "border-green-600"
+                              : "border-red-600"
+                          }`}
+                        >
+                          <div
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              item.tags.includes("vegetarian") || item.tags.includes("vegan")
+                                ? "bg-green-600"
+                                : "bg-red-600"
+                            }`}
+                          />
+                        </div>
+                        <span className={`text-[9px] uppercase tracking-wider font-medium ${
                           item.tags.includes("vegetarian") || item.tags.includes("vegan")
-                            ? "bg-green-600"
-                            : "bg-red-600"
-                        }`}
-                      />
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}>
+                          {item.tags.includes("vegan") ? "Vegan" : item.tags.includes("vegetarian") ? "Veg" : "Non-Veg"}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

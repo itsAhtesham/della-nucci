@@ -23,12 +23,12 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-18 lg:py-22 relative z-10">
         {/* Top section — Brand */}
         <div className="text-center mb-14">
-          <div className="inline-flex w-16 h-16 rounded-full border border-white/10 items-center justify-center mb-5">
+          <div className="inline-flex w-24 h-24 rounded-full border border-white/10 items-center justify-center mb-5">
             <div className="text-center">
-              <span className="text-white/60 font-accent text-[8px] uppercase tracking-[0.3em] block">
+              <span className="text-white/60 font-accent text-[9px] uppercase tracking-[0.3em] block mb-0.5">
                 Cafe
               </span>
-              <span className="text-white font-serif text-sm font-bold leading-none tracking-wider">
+              <span className="text-white font-serif text-base font-bold leading-none tracking-wider">
                 Della
                 <br />
                 Nucci

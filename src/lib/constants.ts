@@ -26,7 +26,9 @@ export const SITE_CONFIG = {
   social: {
     instagram: "https://www.instagram.com/dellanucci/",
     google:
-      "https://www.google.com/maps/place/Della+Nucci/@28.5395734,77.3650662,17z",
+      "https://www.google.com/maps/place/Della+Nucci/@28.5395734,77.3676411,17z/data=!3m1!4b1!4m6!3m5!1s0x390ce707ee160619:0xee511eb7aef6cb13!8m2!3d28.5395734!4d77.3676411!16s",
+    directions:
+      "https://www.google.com/maps/dir/?api=1&destination=28.5395734,77.3676411&destination_place_id=0x390ce707ee160619:0xee511eb7aef6cb13",
   },
   coordinates: {
     lat: 28.5395734,

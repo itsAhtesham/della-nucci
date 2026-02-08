@@ -112,6 +112,7 @@ export function HomeExperience() {
           >
             {amenities.map((amenity, i) => {
               const Icon = iconMap[amenity.icon];
+              const indexLabel = String(i + 1).padStart(2, "0");
               return (
                 <motion.div
                   key={amenity.title}
@@ -120,17 +121,25 @@ export function HomeExperience() {
                   transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   className="group relative"
                 >
-                  <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-sm p-7 sm:p-8 hover:bg-white/[0.07] hover:border-white/[0.1] transition-all duration-500">
+                  <div className="relative bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] border-l-2 border-l-white/[0.06] rounded-sm p-7 sm:p-8 hover:bg-white/[0.10] hover:border-white/20 hover:border-l-peach-200/40 transition-all duration-500 overflow-hidden">
+                    {/* Editorial number watermark */}
+                    <div className="absolute top-4 right-5 font-serif text-5xl font-bold text-white/[0.04] leading-none pointer-events-none select-none group-hover:text-white/[0.08] transition-colors duration-500">
+                      {indexLabel}
+                    </div>
+
+                    {/* Bottom accent line */}
+                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-peach-200/50 group-hover:w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+
                     {/* Icon */}
-                    <div className={`inline-flex w-12 h-12 rounded-full items-center justify-center bg-gradient-to-br ${amenity.color} mb-5 group-hover:scale-105 transition-transform duration-400`}>
+                    <div className={`inline-flex w-12 h-12 rounded-full items-center justify-center bg-gradient-to-br ${amenity.color} mb-5 group-hover:scale-110 transition-transform duration-400`}>
                       <Icon className={`w-5 h-5 ${amenity.iconColor}`} />
                     </div>
 
                     {/* Content */}
-                    <h3 className="font-serif text-lg font-bold text-white mb-2 group-hover:text-peach-200 transition-colors duration-300">
+                    <h3 className="font-serif text-lg font-bold text-white mb-2 group-hover:text-peach-100 transition-colors duration-300">
                       {amenity.title}
                     </h3>
-                    <p className="text-white/55 text-sm leading-relaxed">
+                    <p className="text-white/50 text-sm leading-relaxed opacity-60 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-500">
                       {amenity.description}
                     </p>
                   </div>

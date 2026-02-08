@@ -164,15 +164,6 @@ img {
   transition: opacity 0.4s var(--ease-elegant);
 }
 
-img[loading="lazy"] {
-  opacity: 0;
-}
-
-img[loading="lazy"].loaded,
-img:not([loading="lazy"]) {
-  opacity: 1;
-}
-
 /* ── Utility Classes ── */
 
 @utility text-gradient {
