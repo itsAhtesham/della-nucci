@@ -81,6 +81,25 @@ export interface BlogPost {
   readingTime: number;
 }
 
+export type ReviewSource = "google" | "zomato";
+
+export interface Review {
+  id: number;
+  name: string;
+  text: string;
+  rating: number;
+  date: string;
+  source: ReviewSource;
+  avatar?: string;
+}
+
+export interface PlatformRating {
+  source: ReviewSource;
+  rating: number;
+  reviewCount: number;
+  url: string;
+}
+
 export interface NavItem {
   name: string;
   href: string;
