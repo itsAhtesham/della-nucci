@@ -2,71 +2,15 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import {
-  PawPrint,
-  TreePalm,
-  Car,
-  Music,
-  Wind,
-  Baby,
-} from "lucide-react";
 import { FadeIn } from "@/components/animations/fade-in";
-
-const iconMap = { PawPrint, TreePalm, Car, Music, Wind, Baby };
-
-const amenities = [
-  {
-    icon: "PawPrint" as const,
-    title: "Pet Friendly",
-    description: "Your furry friends are always welcome at our tables",
-    color: "from-sage-100/80 to-sage-200/40",
-    iconColor: "text-sage-500",
-  },
-  {
-    icon: "TreePalm" as const,
-    title: "Al Fresco Dining",
-    description: "Breathe fresh air while you dine under open skies",
-    color: "from-sage-100/60 to-cream-200/60",
-    iconColor: "text-sage-400",
-  },
-  {
-    icon: "Car" as const,
-    title: "Drive-Through",
-    description: "Grab your coffee on the go — no wait needed",
-    color: "from-peach-100/70 to-cream-200/50",
-    iconColor: "text-burgundy-600",
-  },
-  {
-    icon: "Music" as const,
-    title: "Karaoke Nights",
-    description: "Sing, laugh, and create memories",
-    color: "from-burgundy-100/60 to-peach-100/50",
-    iconColor: "text-burgundy-700",
-  },
-  {
-    icon: "Wind" as const,
-    title: "Air Conditioned",
-    description: "Cool, comfortable interiors for every season",
-    color: "from-cream-200/70 to-cream-100/50",
-    iconColor: "text-warm-500",
-  },
-  {
-    icon: "Baby" as const,
-    title: "Family Friendly",
-    description: "A welcoming space for guests of all ages",
-    color: "from-peach-50/80 to-cream-100/60",
-    iconColor: "text-peach-300",
-  },
-];
+import { AMENITIES } from "@/data/amenities";
 
 export function HomeExperience() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
     <section className="relative overflow-hidden">
-      {/* Full-width dark band */}
       <div className="bg-burgundy-950 py-24 sm:py-32 lg:py-40 relative">
-        {/* Atmospheric gradients */}
         <div
           className="absolute inset-0"
           style={{
@@ -110,8 +54,8 @@ export function HomeExperience() {
             ref={ref}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
           >
-            {amenities.map((amenity, i) => {
-              const Icon = iconMap[amenity.icon];
+            {AMENITIES.map((amenity, i) => {
+              const Icon = amenity.icon;
               const indexLabel = String(i + 1).padStart(2, "0");
               return (
                 <motion.div
@@ -122,20 +66,16 @@ export function HomeExperience() {
                   className="group relative"
                 >
                   <div className="relative bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] border-l-2 border-l-white/[0.06] rounded-sm p-7 sm:p-8 hover:bg-white/[0.10] hover:border-white/20 hover:border-l-peach-200/40 transition-all duration-500 overflow-hidden">
-                    {/* Editorial number watermark */}
                     <div className="absolute top-4 right-5 font-serif text-5xl font-bold text-white/[0.04] leading-none pointer-events-none select-none group-hover:text-white/[0.08] transition-colors duration-500">
                       {indexLabel}
                     </div>
 
-                    {/* Bottom accent line */}
                     <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-peach-200/50 group-hover:w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
 
-                    {/* Icon */}
                     <div className={`inline-flex w-12 h-12 rounded-full items-center justify-center bg-gradient-to-br ${amenity.color} mb-5 group-hover:scale-110 transition-transform duration-400`}>
                       <Icon className={`w-5 h-5 ${amenity.iconColor}`} />
                     </div>
 
-                    {/* Content */}
                     <h3 className="font-serif text-lg font-bold text-white mb-2 group-hover:text-peach-100 transition-colors duration-300">
                       {amenity.title}
                     </h3>

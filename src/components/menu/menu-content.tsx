@@ -1,79 +1,24 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Flame, Leaf, Star, ChefHat, Sparkles } from "lucide-react";
-import { menuSections, allMenuItems } from "@/data/menu";
+import { Search, X } from "lucide-react";
+import { menuSections } from "@/data/menu";
 import { formatCurrency, cn } from "@/lib/utils";
-import type { MenuCategory, DietaryTag } from "@/types";
-
-const categoryEmojis: Record<string, string> = {
-  starters: "🥗",
-  pizza: "🍕",
-  pasta: "🍝",
-  burgers: "🍔",
-  sandwiches: "🥪",
-  coffee: "☕",
-  beverages: "🥤",
-  desserts: "🍫",
-};
-
-const categoryGradients: Record<string, string> = {
-  starters: "from-emerald-50 to-cream-100",
-  pizza: "from-orange-100 to-peach-100",
-  pasta: "from-yellow-50 to-cream-200",
-  burgers: "from-orange-50 to-cream-200",
-  sandwiches: "from-amber-50 to-cream-100",
-  coffee: "from-amber-50 to-cream-300",
-  beverages: "from-sky-50 to-cream-100",
-  desserts: "from-pink-50 to-peach-50",
-};
-
-const dietaryFilters: { tag: DietaryTag; label: string; icon: typeof Leaf }[] = [
-  { tag: "vegetarian", label: "Veg", icon: Leaf },
-  { tag: "non-vegetarian", label: "Non-Veg", icon: Flame },
-  { tag: "best-seller", label: "Bestsellers", icon: Star },
-  { tag: "chef-special", label: "Chef's Special", icon: ChefHat },
-  { tag: "new", label: "New", icon: Sparkles },
-];
+import { isVeg, DIETARY_FILTERS } from "@/lib/menu-utils";
+import { CATEGORY_EMOJIS, CATEGORY_GRADIENTS } from "@/config/menu-display";
+import { useMenuFilter } from "@/hooks/useMenuFilter";
 
 export function MenuContent() {
-  const [activeCategory, setActiveCategory] = useState<"all" | MenuCategory>("all");
-  const [activeDietaryFilter, setActiveDietaryFilter] = useState<DietaryTag | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredSections = useMemo(() => {
-    let sections = activeCategory === "all"
-      ? menuSections
-      : menuSections.filter((s) => s.category === activeCategory);
-
-    if (activeDietaryFilter) {
-      sections = sections
-        .map((s) => ({
-          ...s,
-          items: s.items.filter((item) => item.tags.includes(activeDietaryFilter)),
-        }))
-        .filter((s) => s.items.length > 0);
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      sections = sections
-        .map((s) => ({
-          ...s,
-          items: s.items.filter(
-            (item) =>
-              item.name.toLowerCase().includes(q) ||
-              item.description.toLowerCase().includes(q)
-          ),
-        }))
-        .filter((s) => s.items.length > 0);
-    }
-
-    return sections;
-  }, [activeCategory, activeDietaryFilter, searchQuery]);
-
-  const totalItems = filteredSections.reduce((sum, s) => sum + s.items.length, 0);
+  const {
+    activeCategory,
+    setActiveCategory,
+    activeDietaryFilter,
+    toggleDietaryFilter,
+    searchQuery,
+    setSearchQuery,
+    filteredSections,
+    totalItems,
+  } = useMenuFilter(menuSections);
 
   return (
     <section className="section-padding bg-cream-100">
@@ -122,7 +67,7 @@ export function MenuContent() {
                   : "bg-white text-warm-600 hover:bg-warm-50 border border-warm-200"
               )}
             >
-              <span>{categoryEmojis[section.category]}</span>
+              <span>{CATEGORY_EMOJIS[section.category]}</span>
               <span className="hidden sm:inline">{section.title}</span>
               <span className="sm:hidden">{section.title.split(" ")[0]}</span>
             </button>
@@ -131,12 +76,10 @@ export function MenuContent() {
 
         {/* Dietary Filters */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {dietaryFilters.map(({ tag, label, icon: Icon }) => (
+          {DIETARY_FILTERS.map(({ tag, label, icon: Icon }) => (
             <button
               key={tag}
-              onClick={() =>
-                setActiveDietaryFilter(activeDietaryFilter === tag ? null : tag)
-              }
+              onClick={() => toggleDietaryFilter(tag)}
               className={cn(
                 "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-medium transition-all duration-300",
                 activeDietaryFilter === tag
@@ -187,7 +130,7 @@ export function MenuContent() {
                   {/* Section Header */}
                   <div className="text-center mb-10">
                     <span className="text-4xl mb-3 block">
-                      {categoryEmojis[section.category]}
+                      {CATEGORY_EMOJIS[section.category]}
                     </span>
                     <h2 className="font-serif text-2xl sm:text-3xl font-bold text-burgundy-900 mb-2">
                       {section.title}
@@ -206,92 +149,91 @@ export function MenuContent() {
 
                   {/* Items Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {section.items.map((item, i) => (
-                      <motion.div
-                        key={item.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: i * 0.05 }}
-                        className="group"
-                      >
-                        <div className="bg-white rounded-xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500 hover:-translate-y-1 h-full flex flex-col">
-                          {/* Image */}
-                          <div
-                            className={`relative h-40 bg-gradient-to-br ${
-                              categoryGradients[item.category] || "from-cream-100 to-cream-200"
-                            } flex items-center justify-center`}
-                          >
-                            <span className="text-5xl group-hover:scale-110 transition-transform duration-500">
-                              {categoryEmojis[item.category] || "🍽️"}
-                            </span>
+                    {section.items.map((item, i) => {
+                      const vegStatus = isVeg(item.tags);
+                      return (
+                        <motion.div
+                          key={item.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, delay: i * 0.05 }}
+                          className="group"
+                        >
+                          <div className="bg-white rounded-xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500 hover:-translate-y-1 h-full flex flex-col">
+                            {/* Image */}
+                            <div
+                              className={`relative h-40 bg-gradient-to-br ${
+                                CATEGORY_GRADIENTS[item.category] || "from-cream-100 to-cream-200"
+                              } flex items-center justify-center`}
+                            >
+                              <span className="text-5xl group-hover:scale-110 transition-transform duration-500">
+                                {CATEGORY_EMOJIS[item.category] || "🍽️"}
+                              </span>
 
-                            {/* Tags */}
-                            <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                              {item.tags.includes("best-seller") && (
-                                <span className="px-2 py-0.5 bg-burgundy-900 text-white text-[10px] font-semibold uppercase tracking-wider rounded-full">
-                                  Bestseller
-                                </span>
-                              )}
-                              {item.tags.includes("chef-special") && (
-                                <span className="px-2 py-0.5 bg-sage-400 text-white text-[10px] font-semibold uppercase tracking-wider rounded-full">
-                                  Chef&apos;s Pick
-                                </span>
-                              )}
-                              {item.tags.includes("new") && (
-                                <span className="px-2 py-0.5 bg-peach-300 text-burgundy-900 text-[10px] font-semibold uppercase tracking-wider rounded-full">
-                                  New
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Dietary */}
-                            <div className="absolute top-3 right-3">
-                              <div
-                                className={cn(
-                                  "w-5 h-5 rounded-sm border-2 flex items-center justify-center",
-                                  item.tags.includes("vegetarian") || item.tags.includes("vegan")
-                                    ? "border-green-600"
-                                    : "border-red-600"
+                              {/* Tags */}
+                              <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                                {item.tags.includes("best-seller") && (
+                                  <span className="px-2 py-0.5 bg-burgundy-900 text-white text-[10px] font-semibold uppercase tracking-wider rounded-full">
+                                    Bestseller
+                                  </span>
                                 )}
-                              >
+                                {item.tags.includes("chef-special") && (
+                                  <span className="px-2 py-0.5 bg-sage-400 text-white text-[10px] font-semibold uppercase tracking-wider rounded-full">
+                                    Chef&apos;s Pick
+                                  </span>
+                                )}
+                                {item.tags.includes("new") && (
+                                  <span className="px-2 py-0.5 bg-peach-300 text-burgundy-900 text-[10px] font-semibold uppercase tracking-wider rounded-full">
+                                    New
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Dietary */}
+                              <div className="absolute top-3 right-3">
                                 <div
                                   className={cn(
-                                    "w-2.5 h-2.5 rounded-full",
-                                    item.tags.includes("vegetarian") || item.tags.includes("vegan")
-                                      ? "bg-green-600"
-                                      : "bg-red-600"
+                                    "w-5 h-5 rounded-sm border-2 flex items-center justify-center",
+                                    vegStatus ? "border-green-600" : "border-red-600"
                                   )}
-                                />
+                                >
+                                  <div
+                                    className={cn(
+                                      "w-2.5 h-2.5 rounded-full",
+                                      vegStatus ? "bg-green-600" : "bg-red-600"
+                                    )}
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          {/* Content */}
-                          <div className="p-5 flex-1 flex flex-col">
-                            <h3 className="font-serif text-lg font-bold text-burgundy-900 mb-1.5 group-hover:text-burgundy-700 transition-colors">
-                              {item.name}
-                            </h3>
-                            <p className="text-warm-500 text-sm leading-relaxed mb-4 flex-1 line-clamp-2">
-                              {item.description}
-                            </p>
-                            <div className="flex items-center justify-between pt-3 border-t border-warm-100">
-                              <span className="font-serif text-lg font-bold text-burgundy-900">
-                                {formatCurrency(item.price)}
-                              </span>
-                              <div className="flex items-center gap-2">
-                                {item.tags.includes("spicy") && (
-                                  <span className="text-xs text-warm-400">🌶️ Spicy</span>
-                                )}
-                                {item.tags.includes("vegan") && (
-                                  <span className="text-xs text-sage-500">🌱 Vegan</span>
-                                )}
+                            {/* Content */}
+                            <div className="p-5 flex-1 flex flex-col">
+                              <h3 className="font-serif text-lg font-bold text-burgundy-900 mb-1.5 group-hover:text-burgundy-700 transition-colors">
+                                {item.name}
+                              </h3>
+                              <p className="text-warm-500 text-sm leading-relaxed mb-4 flex-1 line-clamp-2">
+                                {item.description}
+                              </p>
+                              <div className="flex items-center justify-between pt-3 border-t border-warm-100">
+                                <span className="font-serif text-lg font-bold text-burgundy-900">
+                                  {formatCurrency(item.price)}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                  {item.tags.includes("spicy") && (
+                                    <span className="text-xs text-warm-400">🌶️ Spicy</span>
+                                  )}
+                                  {item.tags.includes("vegan") && (
+                                    <span className="text-xs text-sage-500">🌱 Vegan</span>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </div>
               ))}

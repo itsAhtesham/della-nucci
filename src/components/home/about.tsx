@@ -3,17 +3,11 @@
 import { FadeIn } from "@/components/animations/fade-in";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-
-const stats = [
-  { value: "50+", label: "Menu Creations" },
-  { value: "167+", label: "5-Star Reviews" },
-  { value: "1000+", label: "Coffees Poured" },
-];
+import { HOME_STATS } from "@/data/site-stats";
 
 export function HomeAbout() {
   return (
     <section className="py-24 sm:py-32 lg:py-40 bg-cream-100 relative overflow-hidden">
-      {/* Atmospheric background elements */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-peach-100/30 to-transparent blur-[100px]" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-sage-100/20 to-transparent blur-[80px]" />
 
@@ -22,7 +16,6 @@ export function HomeAbout() {
           {/* Left — Visual composition */}
           <FadeIn direction="left" className="lg:col-span-5 relative">
             <div className="relative max-w-md mx-auto lg:max-w-none">
-              {/* Large decorative image placeholder */}
               <div className="relative aspect-[3/4] rounded-sm overflow-hidden shadow-dramatic">
                 <div
                   className="absolute inset-0"
@@ -31,7 +24,6 @@ export function HomeAbout() {
                       "linear-gradient(145deg, #F8DDD3 0%, #f3c5b3 30%, #ede6da 60%, #F5EFE6 100%)",
                   }}
                 />
-                {/* Textured overlay */}
                 <div
                   className="absolute inset-0"
                   style={{
@@ -41,7 +33,6 @@ export function HomeAbout() {
                     backgroundRepeat: "no-repeat",
                   }}
                 />
-                {/* Interior feel content */}
                 <div className="absolute inset-0 flex items-end p-8">
                   <div className="w-full">
                     <div className="bg-white/90 backdrop-blur-sm p-6 rounded-sm shadow-soft">
@@ -67,10 +58,8 @@ export function HomeAbout() {
                 </div>
               </div>
 
-              {/* Floating accent element */}
               <div className="absolute -top-6 -right-6 lg:-right-8 w-32 h-32 border border-burgundy-900/10 rounded-sm" />
 
-              {/* Small overlapping decorative card */}
               <div className="absolute -bottom-8 -left-4 lg:-left-8 bg-burgundy-900 text-white p-5 rounded-sm shadow-dramatic z-10">
                 <p className="text-[10px] uppercase tracking-[0.3em] text-peach-200/80 font-accent mb-1">Est.</p>
                 <p className="font-serif text-3xl font-bold leading-none">2024</p>
@@ -125,10 +114,9 @@ export function HomeAbout() {
               </div>
             </FadeIn>
 
-            {/* Stats */}
             <FadeIn delay={0.3}>
               <div className="flex flex-wrap gap-8 sm:gap-12 mb-10 pb-10 border-b border-burgundy-900/8">
-                {stats.map((stat) => (
+                {HOME_STATS.map((stat) => (
                   <div key={stat.label}>
                     <p className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-900 leading-none mb-1.5">
                       {stat.value}

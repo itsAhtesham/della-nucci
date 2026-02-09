@@ -21,10 +21,6 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    setIsMobileOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isMobileOpen]);
@@ -207,6 +203,7 @@ export function Header() {
                     >
                       <Link
                         href={item.href}
+                        onClick={() => setIsMobileOpen(false)}
                         className={cn(
                           "block py-3.5 px-4 text-base font-medium transition-all duration-300 rounded-lg",
                           pathname === item.href

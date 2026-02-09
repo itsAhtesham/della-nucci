@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { playfair, inter, cormorant } from "@/styles/fonts";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { JsonLd, restaurantSchema, organizationSchema, websiteSchema } from "@/config/schema";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dellanucci.com";
@@ -84,126 +85,6 @@ export const metadata: Metadata = {
   category: "restaurant",
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Restaurant",
-  "@id": `${siteUrl}/#restaurant`,
-  name: "Cafe Della Nucci",
-  image: [
-    `${siteUrl}/images/og/og-default.avif`,
-    `${siteUrl}/images/hero/main.avif`,
-  ],
-  url: siteUrl,
-  telephone: "+917861004444",
-  email: "hello@dellanucci.com",
-  priceRange: "₹₹",
-  servesCuisine: ["Italian", "Continental", "Pizza", "Coffee"],
-  acceptsReservations: "True",
-  menu: `${siteUrl}/menu`,
-  hasMenu: {
-    "@type": "Menu",
-    url: `${siteUrl}/menu`,
-    hasMenuSection: [
-      { "@type": "MenuSection", name: "Pizzas" },
-      { "@type": "MenuSection", name: "Pasta" },
-      { "@type": "MenuSection", name: "Coffee" },
-      { "@type": "MenuSection", name: "Desserts" },
-      { "@type": "MenuSection", name: "Burgers" },
-      { "@type": "MenuSection", name: "Sandwiches" },
-      { "@type": "MenuSection", name: "Starters" },
-      { "@type": "MenuSection", name: "Beverages" },
-    ],
-  },
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "HA-113, Sector 104, Hazipur",
-    addressLocality: "Noida",
-    addressRegion: "Uttar Pradesh",
-    postalCode: "201301",
-    addressCountry: "IN",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 28.5395734,
-    longitude: 77.3676411,
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "11:30",
-      closes: "23:00",
-    },
-  ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    bestRating: "5",
-    worstRating: "1",
-    reviewCount: "167",
-  },
-  amenityFeature: [
-    { "@type": "LocationFeatureSpecification", name: "Pet Friendly", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Outdoor Seating", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Drive-Through", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Air Conditioning", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Kids Friendly", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Live Entertainment", value: true },
-  ],
-  sameAs: [
-    "https://www.instagram.com/dellanucci/",
-    "https://www.google.com/maps/place/Della+Nucci/@28.5395734,77.3650662,17z",
-  ],
-};
-
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${siteUrl}/#organization`,
-  name: "Cafe Della Nucci",
-  url: siteUrl,
-  logo: {
-    "@type": "ImageObject",
-    url: `${siteUrl}/images/og/og-default.avif`,
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+917861004444",
-    contactType: "reservations",
-    email: "hello@dellanucci.com",
-    availableLanguage: ["English", "Hindi"],
-  },
-  sameAs: [
-    "https://www.instagram.com/dellanucci/",
-    "https://www.google.com/maps/place/Della+Nucci/@28.5395734,77.3650662,17z",
-  ],
-};
-
-const websiteJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${siteUrl}/#website`,
-  name: "Cafe Della Nucci",
-  url: siteUrl,
-  publisher: { "@id": `${siteUrl}/#organization` },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${siteUrl}/menu?search={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -215,24 +96,9 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} ${cormorant.variable}`}
     >
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteJsonLd),
-          }}
-        />
+        <JsonLd data={restaurantSchema} />
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={websiteSchema} />
       </head>
       <body className="antialiased">
         <Header />

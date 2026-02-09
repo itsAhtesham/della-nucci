@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { EventsHero } from "@/components/events/events-hero";
 import { EventsList } from "@/components/events/events-list";
+import { JsonLd, getBreadcrumbSchema } from "@/config/schema";
 import { events } from "@/data/events";
+import { SITE_CONFIG } from "@/lib/constants";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dellanucci.com";
 
@@ -28,24 +30,14 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Events",
-      item: `${siteUrl}/events`,
-    },
-  ],
-};
+function convertTo24Hour(time12h: string): string {
+  const [time, modifier] = time12h.trim().split(" ");
+  const [rawHours, minutes] = time.split(":");
+  let hours = parseInt(rawHours, 10);
+  if (modifier === "PM" && hours !== 12) hours += 12;
+  if (modifier === "AM" && hours === 12) hours = 0;
+  return `${hours.toString().padStart(2, "0")}:${minutes}`;
+}
 
 const eventsJsonLd = events.map((event) => {
   const [startTime] = event.time.split(" — ");
@@ -61,47 +53,31 @@ const eventsJsonLd = events.map((event) => {
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
       "@type": "Place",
-      name: "Cafe Della Nucci",
+      name: SITE_CONFIG.name,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "HA-113, Sector 104, Hazipur",
-        addressLocality: "Noida",
-        addressRegion: "Uttar Pradesh",
-        postalCode: "201301",
+        streetAddress: SITE_CONFIG.address.street,
+        addressLocality: SITE_CONFIG.address.city,
+        addressRegion: SITE_CONFIG.address.state,
+        postalCode: SITE_CONFIG.address.zip,
         addressCountry: "IN",
       },
     },
     organizer: {
       "@type": "Organization",
-      name: "Cafe Della Nucci",
+      name: SITE_CONFIG.name,
       url: siteUrl,
     },
     image: `${siteUrl}/images/og/og-default.avif`,
   };
 });
 
-function convertTo24Hour(time12h: string): string {
-  const [time, modifier] = time12h.trim().split(" ");
-  const [rawHours, minutes] = time.split(":");
-  let hours = parseInt(rawHours, 10);
-  if (modifier === "PM" && hours !== 12) hours += 12;
-  if (modifier === "AM" && hours === 12) hours = 0;
-  return `${hours.toString().padStart(2, "0")}:${minutes}`;
-}
-
 export default function EventsPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={getBreadcrumbSchema([{ name: "Home" }, { name: "Events", path: "/events" }])} />
       {eventsJsonLd.map((eventLd, index) => (
-        <script
-          key={index}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(eventLd) }}
-        />
+        <JsonLd key={index} data={eventLd} />
       ))}
       <EventsHero />
       <EventsList />

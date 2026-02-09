@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ContactHero } from "@/components/contact/contact-hero";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ContactInfo } from "@/components/contact/contact-info";
+import { JsonLd, getBreadcrumbSchema } from "@/config/schema";
+import { SITE_CONFIG } from "@/lib/constants";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dellanucci.com";
 
@@ -28,61 +30,36 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Contact",
-      item: `${siteUrl}/contact`,
-    },
-  ],
-};
-
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  name: "Cafe Della Nucci",
-  telephone: "+917861004444",
-  email: "hello@dellanucci.com",
+  name: SITE_CONFIG.name,
+  telephone: `+91${SITE_CONFIG.phone}`,
+  email: SITE_CONFIG.email,
   url: siteUrl,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "HA-113, Sector 104, Hazipur",
-    addressLocality: "Noida",
-    addressRegion: "Uttar Pradesh",
-    postalCode: "201301",
+    streetAddress: SITE_CONFIG.address.street,
+    addressLocality: SITE_CONFIG.address.city,
+    addressRegion: SITE_CONFIG.address.state,
+    postalCode: SITE_CONFIG.address.zip,
     addressCountry: "IN",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 28.5395734,
-    longitude: 77.3676411,
+    latitude: SITE_CONFIG.coordinates.lat,
+    longitude: SITE_CONFIG.coordinates.lng,
   },
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
+      "Monday", "Tuesday", "Wednesday", "Thursday",
+      "Friday", "Saturday", "Sunday",
     ],
     opens: "11:30",
     closes: "23:00",
   },
-  hasMap:
-    "https://www.google.com/maps/place/Della+Nucci/@28.5395734,77.3650662,17z",
+  hasMap: SITE_CONFIG.social.google,
 };
 
 const faqJsonLd = {
@@ -94,7 +71,7 @@ const faqJsonLd = {
       name: "What are the opening hours of Cafe Della Nucci?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Cafe Della Nucci is open daily from 11:30 AM to 11:00 PM.",
+        text: `Cafe Della Nucci is open daily from ${SITE_CONFIG.hours.open} to ${SITE_CONFIG.hours.close}.`,
       },
     },
     {
@@ -102,7 +79,7 @@ const faqJsonLd = {
       name: "Where is Cafe Della Nucci located?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We are located at HA-113, Sector 104, Hazipur, Noida, Uttar Pradesh 201301, India.",
+        text: `We are located at ${SITE_CONFIG.address.full}.`,
       },
     },
     {
@@ -118,7 +95,7 @@ const faqJsonLd = {
       name: "Does Cafe Della Nucci take reservations?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, you can make reservations by calling us at +91 7861004444 or by filling out the contact form on our website.",
+        text: `Yes, you can make reservations by calling us at +91 ${SITE_CONFIG.phone} or by filling out the contact form on our website.`,
       },
     },
     {
@@ -143,18 +120,9 @@ const faqJsonLd = {
 export default function ContactPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <JsonLd data={getBreadcrumbSchema([{ name: "Home" }, { name: "Contact", path: "/contact" }])} />
+      <JsonLd data={localBusinessJsonLd} />
+      <JsonLd data={faqJsonLd} />
       <ContactHero />
       <section className="section-padding bg-cream-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

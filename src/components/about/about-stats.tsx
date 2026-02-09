@@ -1,13 +1,7 @@
 "use client";
 
 import { FadeIn } from "@/components/animations/fade-in";
-
-const stats = [
-  { number: "50+", label: "Menu Items", description: "Curated with love" },
-  { number: "167+", label: "5-Star Reviews", description: "On Google" },
-  { number: "1000+", label: "Coffees Served", description: "And counting" },
-  { number: "1", label: "Big Family", description: "Our team & community" },
-];
+import { SITE_STATS } from "@/data/site-stats";
 
 export function AboutStats() {
   return (
@@ -30,10 +24,10 @@ export function AboutStats() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {stats.map((stat, i) => (
+          {SITE_STATS.map((stat, i) => (
             <FadeIn key={stat.label} delay={i * 0.1} className="text-center">
               <p className="font-serif text-4xl sm:text-5xl font-bold text-white mb-2">
-                {stat.number}
+                {stat.value}
               </p>
               <p className="text-peach-200 font-semibold text-sm uppercase tracking-wider mb-1">
                 {stat.label}

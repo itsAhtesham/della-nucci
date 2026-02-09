@@ -45,35 +45,3 @@ export const NAVIGATION: NavItem[] = [
   { name: "Contact", href: "/contact" },
 ];
 
-export const AMENITIES = [
-  {
-    icon: "PawPrint",
-    title: "Pet Friendly",
-    description: "Bring your furry friends along",
-  },
-  {
-    icon: "TreePalm",
-    title: "Outdoor Seating",
-    description: "Dine under the open sky",
-  },
-  {
-    icon: "Car",
-    title: "Drive-Through",
-    description: "Coffee on the go",
-  },
-  {
-    icon: "Music",
-    title: "Karaoke Nights",
-    description: "Sing your heart out",
-  },
-  {
-    icon: "Wind",
-    title: "Air Conditioned",
-    description: "Cool & comfortable interiors",
-  },
-  {
-    icon: "Baby",
-    title: "Kids Friendly",
-    description: "Fun for the whole family",
-  },
-];

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GalleryHero } from "@/components/gallery/gallery-hero";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
+import { JsonLd, getBreadcrumbSchema } from "@/config/schema";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dellanucci.com";
 
@@ -27,25 +28,6 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Gallery",
-      item: `${siteUrl}/gallery`,
-    },
-  ],
-};
-
 const imageGalleryJsonLd = {
   "@context": "https://schema.org",
   "@type": "ImageGallery",
@@ -62,14 +44,8 @@ const imageGalleryJsonLd = {
 export default function GalleryPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(imageGalleryJsonLd) }}
-      />
+      <JsonLd data={getBreadcrumbSchema([{ name: "Home" }, { name: "Gallery", path: "/gallery" }])} />
+      <JsonLd data={imageGalleryJsonLd} />
       <GalleryHero />
       <GalleryGrid />
     </>

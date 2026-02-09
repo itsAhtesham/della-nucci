@@ -4,6 +4,7 @@ import { AboutStory } from "@/components/about/about-story";
 import { AboutValues } from "@/components/about/about-values";
 import { AboutStats } from "@/components/about/about-stats";
 import { AboutTeam } from "@/components/about/about-team";
+import { JsonLd, getBreadcrumbSchema } from "@/config/schema";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dellanucci.com";
 
@@ -30,32 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "About Us",
-      item: `${siteUrl}/about`,
-    },
-  ],
-};
-
 export default function AboutPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={getBreadcrumbSchema([{ name: "Home" }, { name: "About Us", path: "/about" }])} />
       <AboutHero />
       <AboutStory />
       <AboutValues />

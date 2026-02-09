@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { MenuHero } from "@/components/menu/menu-hero";
 import { MenuContent } from "@/components/menu/menu-content";
+import { JsonLd, getBreadcrumbSchema } from "@/config/schema";
 import { menuSections } from "@/data/menu";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dellanucci.com";
@@ -26,25 +27,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-};
-
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Menu",
-      item: `${siteUrl}/menu`,
-    },
-  ],
 };
 
 const menuJsonLd = {
@@ -79,14 +61,8 @@ const menuJsonLd = {
 export default function MenuPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(menuJsonLd) }}
-      />
+      <JsonLd data={getBreadcrumbSchema([{ name: "Home" }, { name: "Menu", path: "/menu" }])} />
+      <JsonLd data={menuJsonLd} />
       <MenuHero />
       <MenuContent />
     </>
