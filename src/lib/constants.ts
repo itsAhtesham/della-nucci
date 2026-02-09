@@ -30,6 +30,9 @@ export const SITE_CONFIG = {
     directions:
       "https://www.google.com/maps/dir/?api=1&destination=28.5395734,77.3676411&destination_place_id=0x390ce707ee160619:0xee511eb7aef6cb13",
   },
+  /** Google Maps embed URL — only rendered on client to avoid SSR/hydration issues */
+  mapEmbedUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505.073!2d77.3650662!3d28.5395734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce707ee160619%3A0xee511eb7aef6cb13!2sDella%20Nucci!5e0!3m2!1sen!2sin!4v1706000000000!5m2!1sen!2sin",
   coordinates: {
     lat: 28.5395734,
     lng: 77.3676411,

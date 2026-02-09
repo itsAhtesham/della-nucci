@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ContactHero } from "@/components/contact/contact-hero";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ContactInfo } from "@/components/contact/contact-info";
+import { MapEmbed } from "@/components/shared/map-embed";
 import { JsonLd, getBreadcrumbSchema } from "@/config/schema";
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -131,19 +132,9 @@ export default function ContactPage() {
             <ContactInfo />
           </div>
 
-          {/* Full-width Map */}
+          {/* Full-width Map — client-only so embed displays correctly */}
           <div className="mt-12 lg:mt-16 rounded-xl overflow-hidden shadow-elevated">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505.073!2d77.3650662!3d28.5395734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce707ee160619%3A0xee511eb7aef6cb13!2sDella%20Nucci!5e0!3m2!1sen!2sin!4v1706000000000!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Cafe Della Nucci Location"
-              className="w-full h-72 sm:h-80 lg:h-[450px]"
-            />
+            <MapEmbed className="w-full" heightClass="h-72 sm:h-80 lg:h-[450px]" />
           </div>
         </div>
       </section>

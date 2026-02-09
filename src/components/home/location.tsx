@@ -1,6 +1,7 @@
 "use client";
 
 import { FadeIn } from "@/components/animations/fade-in";
+import { MapEmbed } from "@/components/shared/map-embed";
 import { MapPin, Clock, Phone, Instagram, Navigation } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -88,15 +89,9 @@ export function HomeLocation() {
           {/* Map */}
           <FadeIn className="lg:col-span-3">
             <div className="relative w-full h-72 sm:h-80 lg:h-full lg:min-h-[400px] rounded-sm overflow-hidden shadow-elevated">
-              <iframe
-                src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505.073!2d77.3650662!3d28.5395734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce707ee160619%3A0xee511eb7aef6cb13!2sDella%20Nucci!5e0!3m2!1sen!2sin!4v1706000000000!5m2!1sen!2sin`}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Cafe Della Nucci Location"
+              <MapEmbed
+                heightClass="h-full min-h-[280px] lg:min-h-[400px]"
+                className="absolute inset-0"
               />
               {/* Overlay border */}
               <div className="absolute inset-0 border border-burgundy-900/[0.04] rounded-sm pointer-events-none" />
