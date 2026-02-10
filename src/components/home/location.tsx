@@ -88,9 +88,9 @@ export function HomeLocation() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
           {/* Map */}
           <FadeIn className="lg:col-span-3">
-            <div className="relative w-full h-72 sm:h-80 lg:h-full lg:min-h-[400px] rounded-sm overflow-hidden shadow-elevated">
+            <div className="relative w-full h-72 sm:h-80 lg:h-[500px] rounded-sm overflow-hidden shadow-elevated">
               <MapEmbed
-                heightClass="h-full min-h-[280px] lg:min-h-[400px]"
+                heightClass="h-full"
                 className="absolute inset-0"
               />
               {/* Overlay border */}

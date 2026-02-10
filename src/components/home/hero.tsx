@@ -50,8 +50,8 @@ export function HomeHero() {
       </div>
 
       {/* ── Main Content ── */}
-      <div className="relative z-10 flex-1 flex items-center">
-        <div className="w-full max-w-[90rem] mx-auto px-6 sm:px-8 lg:px-16 py-32 lg:py-0">
+      <div className="relative z-10 flex-1 flex items-center" style={{ paddingTop: "var(--header-height, 5rem)" }}>
+        <div className="w-full max-w-[90rem] mx-auto px-6 sm:px-8 lg:px-16 pb-32 lg:pb-0">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-center">
             {/* Left Column — Headline */}
             <div className="lg:col-span-7 xl:col-span-7">
@@ -75,7 +75,7 @@ export function HomeHero() {
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
                     transition={{ duration: 1.1, delay: 0.2, ease }}
-                    className="font-serif text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] font-bold text-white leading-[0.9] tracking-[-0.03em]"
+                    className="font-serif text-[2.5rem] min-[375px]:text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] font-bold text-white leading-[0.9] tracking-[-0.03em]"
                   >
                     Where
                   </motion.h1>
@@ -85,7 +85,7 @@ export function HomeHero() {
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
                     transition={{ duration: 1.1, delay: 0.3, ease }}
-                    className="font-serif text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] font-bold leading-[0.9] tracking-[-0.03em]"
+                    className="font-serif text-[2.5rem] min-[375px]:text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] font-bold leading-[0.9] tracking-[-0.03em]"
                     style={{
                       background: "linear-gradient(135deg, #F8DDD3 0%, #f3c5b3 50%, #d4b978 100%)",
                       WebkitBackgroundClip: "text",
@@ -101,7 +101,7 @@ export function HomeHero() {
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
                     transition={{ duration: 1.1, delay: 0.4, ease }}
-                    className="font-serif text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] font-bold text-white leading-[0.9] tracking-[-0.03em]"
+                    className="font-serif text-[2.5rem] min-[375px]:text-[3.2rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] font-bold text-white leading-[0.9] tracking-[-0.03em]"
                   >
                     meet{" "}
                     <span className="font-accent italic font-light text-peach-200/90">warmth</span>

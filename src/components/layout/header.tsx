@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -21,6 +22,19 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    const ro = new ResizeObserver(([entry]) => {
+      const height = entry.borderBoxSize?.[0]?.blockSize ?? el.offsetHeight;
+      document.documentElement.style.setProperty("--header-height", `${height}px`);
+    });
+
+    ro.observe(el, { box: "border-box" });
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isMobileOpen]);
@@ -28,6 +42,7 @@ export function Header() {
   return (
     <>
       <motion.header
+        ref={headerRef}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -41,26 +56,21 @@ export function Header() {
         )}
       >
         {/* Announcement Bar */}
-        <AnimatePresence>
-          {!isScrolled && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-burgundy-950 text-white text-center py-2 text-[11px] tracking-[0.15em] font-accent overflow-hidden"
-            >
-              <span className="opacity-50">Open Daily</span>
-              <span className="mx-3 opacity-20">|</span>
-              <span className="opacity-70">{SITE_CONFIG.hours.open} — {SITE_CONFIG.hours.close}</span>
-              <span className="mx-3 opacity-20">|</span>
-              <a href={`tel:${SITE_CONFIG.phone}`} className="hover:text-peach-200 transition-colors inline-flex items-center gap-1.5 opacity-70 hover:opacity-100">
-                <Phone className="w-3 h-3" />
-                +91 {SITE_CONFIG.phone}
-              </a>
-            </motion.div>
+        <div
+          className={cn(
+            "bg-burgundy-950 text-white text-center text-[11px] tracking-[0.15em] font-accent overflow-hidden transition-all duration-300",
+            isScrolled ? "max-h-0 py-0 opacity-0" : "max-h-12 py-2 opacity-100"
           )}
-        </AnimatePresence>
+        >
+          <span className="opacity-50">Open Daily</span>
+          <span className="mx-3 opacity-20">|</span>
+          <span className="opacity-70">{SITE_CONFIG.hours.open} — {SITE_CONFIG.hours.close}</span>
+          <span className="mx-3 opacity-20">|</span>
+          <a href={`tel:${SITE_CONFIG.phone}`} className="hover:text-peach-200 transition-colors inline-flex items-center gap-1.5 opacity-70 hover:opacity-100">
+            <Phone className="w-3 h-3" />
+            +91 {SITE_CONFIG.phone}
+          </a>
+        </div>
 
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">

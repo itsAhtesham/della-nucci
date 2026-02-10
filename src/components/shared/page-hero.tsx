@@ -12,7 +12,7 @@ interface PageHeroProps {
 
 export function PageHero({ label, title, titleAccent, subtitle }: PageHeroProps) {
   return (
-    <section className="relative pt-36 pb-24 overflow-hidden film-grain">
+    <section className="relative pb-16 sm:pb-24 overflow-hidden film-grain" style={{ paddingTop: "calc(var(--header-height, 5rem) + 2rem)" }}>
       {/* Background layers */}
       <div className="absolute inset-0">
         <div

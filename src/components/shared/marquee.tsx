@@ -70,7 +70,7 @@ export function Marquee({ className, variant = "dark" }: MarqueeProps) {
       {/* Fade edges */}
       <div
         className={cn(
-          "absolute left-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-r",
+          "absolute left-0 top-0 bottom-0 w-12 sm:w-16 lg:w-20 z-10 bg-gradient-to-r",
           variant === "dark"
             ? "from-burgundy-950 to-transparent"
             : "from-cream-200/60 to-transparent"
@@ -78,7 +78,7 @@ export function Marquee({ className, variant = "dark" }: MarqueeProps) {
       />
       <div
         className={cn(
-          "absolute right-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-l",
+          "absolute right-0 top-0 bottom-0 w-12 sm:w-16 lg:w-20 z-10 bg-gradient-to-l",
           variant === "dark"
             ? "from-burgundy-950 to-transparent"
             : "from-cream-200/60 to-transparent"

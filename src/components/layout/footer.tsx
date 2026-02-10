@@ -20,7 +20,7 @@ export function Footer() {
       />
 
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-18 lg:py-22 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-22 relative z-10">
         {/* Top section — Brand */}
         <div className="text-center mb-14">
           <div className="inline-flex w-24 h-24 rounded-full border border-white/10 items-center justify-center mb-5">
@@ -110,7 +110,7 @@ export function Footer() {
                 href={SITE_CONFIG.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
+                className="w-12 h-12 sm:w-11 sm:h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
                 aria-label="Instagram"
               >
                 <Instagram className="w-4 h-4 text-white/60" />
@@ -119,7 +119,7 @@ export function Footer() {
                 href={SITE_CONFIG.social.google}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
+                className="w-12 h-12 sm:w-11 sm:h-11 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
                 aria-label="Google Maps"
               >
                 <MapPin className="w-4 h-4 text-white/60" />

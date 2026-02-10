@@ -194,7 +194,7 @@ export function HomeReviews() {
                 </svg>
               </div>
 
-              <div className="bg-white rounded-sm shadow-soft border border-burgundy-900/[0.04] p-8 sm:p-10 lg:p-14 min-h-[280px] flex items-center relative overflow-hidden">
+              <div className="bg-white rounded-sm shadow-soft border border-burgundy-900/[0.04] p-6 sm:p-8 lg:p-14 min-h-[240px] sm:min-h-[280px] flex items-center relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-peach-50/30 to-transparent" />
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-cream-100/30 to-transparent" />
 

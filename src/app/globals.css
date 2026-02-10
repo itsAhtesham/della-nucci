@@ -98,6 +98,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height, 5rem);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -188,8 +189,18 @@ img {
 }
 
 @utility section-padding {
-  padding-top: var(--spacing-section);
-  padding-bottom: var(--spacing-section);
+  padding-top: var(--spacing-section-sm);
+  padding-bottom: var(--spacing-section-sm);
+
+  @media (min-width: 640px) {
+    padding-top: calc(var(--spacing-section-sm) + 1rem);
+    padding-bottom: calc(var(--spacing-section-sm) + 1rem);
+  }
+
+  @media (min-width: 1024px) {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
 }
 
 @utility elegant-border {
@@ -336,6 +347,17 @@ img {
 .ornament-line::after {
   left: calc(100% + 1rem);
   --direction: left;
+}
+
+/* ── No Scrollbar Utility ── */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ── Film Grain Overlay ── */

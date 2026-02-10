@@ -44,11 +44,11 @@ export function MenuContent() {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8">
+        <div className="flex overflow-x-auto no-scrollbar sm:flex-wrap sm:justify-center gap-2 sm:gap-3 mb-8 pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => setActiveCategory("all")}
             className={cn(
-              "px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-300",
+              "shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-300",
               activeCategory === "all"
                 ? "bg-burgundy-900 text-white shadow-[0_4px_14px_rgba(91,26,26,0.3)]"
                 : "bg-white text-warm-600 hover:bg-warm-50 border border-warm-200"
@@ -61,7 +61,7 @@ export function MenuContent() {
               key={section.category}
               onClick={() => setActiveCategory(section.category)}
               className={cn(
-                "px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 flex items-center gap-1.5",
+                "shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wider transition-all duration-300 flex items-center gap-1.5",
                 activeCategory === section.category
                   ? "bg-burgundy-900 text-white shadow-[0_4px_14px_rgba(91,26,26,0.3)]"
                   : "bg-white text-warm-600 hover:bg-warm-50 border border-warm-200"

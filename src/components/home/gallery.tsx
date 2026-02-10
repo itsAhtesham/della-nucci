@@ -45,7 +45,7 @@ export function HomeGallery() {
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 sm:gap-4 auto-rows-[180px] sm:auto-rows-[200px]">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 sm:gap-4 auto-rows-[200px] sm:auto-rows-[220px]">
           {GALLERY_ITEMS.map((item, i) => {
             const isDark = item.dark || !!item.image;
             return (

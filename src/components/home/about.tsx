@@ -115,7 +115,7 @@ export function HomeAbout() {
             </FadeIn>
 
             <FadeIn delay={0.3}>
-              <div className="flex flex-wrap gap-8 sm:gap-12 mb-10 pb-10 border-b border-burgundy-900/8">
+              <div className="flex flex-wrap justify-center sm:justify-start gap-8 sm:gap-12 mb-10 pb-10 border-b border-burgundy-900/8">
                 {HOME_STATS.map((stat) => (
                   <div key={stat.label}>
                     <p className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-900 leading-none mb-1.5">
