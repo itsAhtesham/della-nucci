@@ -10,13 +10,19 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 50);
+      // Smooth 0→1 progress over 0-200px scroll range (homepage only)
+      setScrollProgress(Math.min(y / 200, 1));
+    };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -47,13 +53,18 @@ export function Header() {
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-600",
-          isScrolled
+          "fixed top-0 left-0 right-0 z-50",
+          !isHome && "transition-all duration-600",
+          !isHome && (isScrolled
             ? "bg-cream-100/95 backdrop-blur-md shadow-[0_1px_20px_rgba(91,26,26,0.06)]"
-            : isHome
-              ? "bg-transparent"
-              : "bg-cream-100"
+            : "bg-cream-100")
         )}
+        style={isHome ? {
+          backgroundColor: `rgba(250, 248, 245, ${scrollProgress * 0.95})`,
+          backdropFilter: `blur(${scrollProgress * 12}px)`,
+          WebkitBackdropFilter: `blur(${scrollProgress * 12}px)`,
+          boxShadow: `0 1px 20px rgba(91, 26, 26, ${scrollProgress * 0.06})`,
+        } : undefined}
       >
         {/* Announcement Bar */}
         <div
