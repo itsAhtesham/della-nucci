@@ -4,6 +4,7 @@ import { HomeFeatured } from "@/components/home/featured";
 import { HomeExperience } from "@/components/home/experience";
 import { HomeGallery } from "@/components/home/gallery";
 import { HomeReviews } from "@/components/home/reviews";
+import { HomeInstagram } from "@/components/home/instagram";
 import { HomeCTA } from "@/components/home/cta";
 import { HomeLocation } from "@/components/home/location";
 import { Marquee } from "@/components/shared/marquee";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <HomeExperience />
       <HomeGallery />
       <HomeReviews />
+      <HomeInstagram />
       <HomeCTA />
       <HomeLocation />
     </>

@@ -218,6 +218,21 @@ img {
   animation: marquee 40s linear infinite;
 }
 
+@utility instagram-marquee {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  @media (min-width: 640px) {
+    animation-duration: 45s;
+  }
+  @media (min-width: 1024px) {
+    animation-duration: 60s;
+  }
+}
+
+.instagram-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* ── Elegant Link Underline ── */
 
 .link-underline {

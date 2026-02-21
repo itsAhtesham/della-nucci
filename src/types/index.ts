@@ -110,3 +110,12 @@ export interface SocialLink {
   href: string;
   icon: string;
 }
+
+export interface InstagramPost {
+  id: number;
+  username: string;
+  image: string;
+  caption: string;
+  likes: number;
+  date: string;
+}
